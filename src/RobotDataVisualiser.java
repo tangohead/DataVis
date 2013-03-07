@@ -17,22 +17,24 @@ import javax.swing.JFrame;
 
 
 public class RobotDataVisualiser{
-	final static int MAX_WIDTH = 1200;
-	final static int MAX_HEIGHT = 400;
+	final static String filename = "dataF200.csv";
+	
+	final static int MAX_WIDTH = 1920;
+	final static int MAX_HEIGHT = 800;
 	
 	final static int X_OFFSET = 30;
 	
 	static int X_PAD; 
-	final static int ROBOT_LINE_OFFSET = 300;
-	final static int WALL_Y_PAD = 4;
-	final static int WALL_OFFSET = 300;
+	final static int ROBOT_LINE_OFFSET = 700;
+	final static int WALL_Y_PAD = 8;
+	final static int WALL_OFFSET = 600;
 
 	final static int DOT_WIDTH = 3;
 	
 	public static void main(String[] args) throws InterruptedException
 	{
 		try {
-			ArrayList<DataPoint> data = CSVReader("../data.csv");
+			ArrayList<DataPoint> data = CSVReader(filename);
 			ArrayList<Double> avgSonar = MovAvg3(data);
 			ArrayList<Double> avgSonar5Pt = MovAvg5(data);
 			
@@ -40,7 +42,7 @@ public class RobotDataVisualiser{
 
 			
 			X_PAD = (int)Math.floor((MAX_WIDTH - (X_OFFSET*2)) / (data.size()));
-			//X_PAD = 10;
+			X_PAD = 10;
 			System.out.println("[DEBUG]: XPAD "+ X_PAD);
 			for(int i = 1; i < data.size(); i++)
 			{
@@ -69,7 +71,7 @@ public class RobotDataVisualiser{
 					d.drawText(data.get(i).getPosition() + "cm", data.get(i).getPosition() * X_PAD + X_OFFSET - 10, ROBOT_LINE_OFFSET + 20, Color.BLUE);
 					d.drawText(avgSonar5Pt.get(i) + "cm", data.get(i).getPosition() * X_PAD + X_OFFSET + 2, ROBOT_LINE_OFFSET - 40, Color.BLUE);
 				}
-				Thread.sleep(75);
+				Thread.sleep(5);
 			}
 
 		} catch (IOException e) {
