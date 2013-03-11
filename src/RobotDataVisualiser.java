@@ -34,7 +34,7 @@ public class RobotDataVisualiser{
 	public static void main(String[] args) throws InterruptedException
 	{
 		try {
-			ArrayList<DataPoint> data = CSVReader("../data5.csv");
+			ArrayList<DataPoint> data = CSVReader("CS313Group1SPoutput.csv");
 			ArrayList<Double> avgSonar = MovAvg3(data);
 			ArrayList<Double> avgSonar5Pt = MovAvg5(data);
 			
