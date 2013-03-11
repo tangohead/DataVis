@@ -1,6 +1,8 @@
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.DataInput;
 import java.io.DataInputStream;
@@ -32,7 +34,7 @@ public class RobotDataVisualiser{
 	public static void main(String[] args) throws InterruptedException
 	{
 		try {
-			ArrayList<DataPoint> data = CSVReader("../data3.csv");
+			ArrayList<DataPoint> data = CSVReader("../data5.csv");
 			ArrayList<Double> avgSonar = MovAvg3(data);
 			ArrayList<Double> avgSonar5Pt = MovAvg5(data);
 			
@@ -174,3 +176,92 @@ public class RobotDataVisualiser{
 	}
 
 }
+
+class DrawingCanvas extends Canvas{
+	Canvas drawCan;
+	Graphics graphics;
+	JFrame frame;
+	
+    public DrawingCanvas(int x, int y) {
+//    	drawCan = new Canvas();
+//    	drawCan.setFocusable(false);
+    	
+        frame = new JFrame();
+        frame.setFocusable(true);
+        frame.setSize(x, y);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(this);
+        frame.setVisible(true);
+        
+        //graphics = drawCan.getGraphics();
+//        drawCan.setBackground(Color.WHITE);
+//        
+//        graphics.setColor(Color.black);
+//        graphics.drawLine(40, 30, 330, 380);
+//        graphics.drawRect(100, 300, 200, 400);
+    }
+ 
+    public void paint(Graphics graphics) {
+    	//System.out.println("Painting the canvas...");
+//        graphics.setColor(Color.black);
+//        graphics.drawLine(40, 30, 330, 380);
+ 
+       // graphics.
+    }
+    
+    public void drawLine(double startX, double startY, double endX, double endY, Color color)
+    {
+    	
+    	Graphics graphics = this.getGraphics();
+    	graphics.setColor(color);
+    	graphics.drawLine((int)startX, (int)startY, (int)endX, (int)endY);
+    }
+    
+    public void drawText(String str, double x, double y, Color color)
+    {
+    	Graphics graphics = this.getGraphics();
+    	graphics.setColor(color);
+    	graphics.drawString(str, (int)x, (int)y);
+    }
+    
+    public void drawLine(double startX, double startY, double endX, double endY, Color color, int thickness)
+    {
+    	Graphics2D g2D = (Graphics2D)this.getGraphics();
+    	g2D.setStroke(new BasicStroke(thickness));
+    	g2D.setColor(color);
+    	g2D.drawLine((int)startX, (int)startY, (int)endX, (int)endY);
+    }
+    
+    
+    public void drawCircle(double x, double y, int diam, Color color)
+    {
+    	Graphics graphics = this.getGraphics();
+    	graphics.setColor(color);
+    	graphics.drawOval((int)x, (int)y, diam, diam);
+    }   
+}
+
+class DataPoint {
+	private double position;
+	private double angle;
+	private double sonarDistance;
+	
+	DataPoint(double position, double angle, double sonarDistance)
+	{
+		this.position = position;
+		this.angle = angle;
+		this.sonarDistance = sonarDistance;
+	}
+	
+	public double getPosition() {
+		return position;
+	}
+	public double getAngle() {
+		return angle;
+	}
+	public double getSonarDistance() {
+		return sonarDistance;
+	}
+}
+
+
